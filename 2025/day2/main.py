@@ -22,4 +22,40 @@ def part1():
     print(total)
 
 
+def part2():
+    def is_invalid(num: str) -> bool:
+        lenn = len(num)
+        for div in range(2, lenn + 1):
+            if lenn % div != 0:
+                # return False
+                continue
+
+            half = lenn // div
+            outer_continue = False
+            for i in range(half):
+                val = num[i]
+                for mult in range(1, div):
+                    if val != num[i + (half * mult)]:
+                        outer_continue = True
+                        break
+            if outer_continue:
+                continue
+            else:
+                return True
+        return False
+
+    total = 0
+    file = open("input", encoding="utf-8")
+    for num_range in file.readline().split(sep=","):
+        nums = num_range.split(sep="-")
+        start = int(nums[0])
+        end = int(nums[1])
+        for num in range(start, end + 1):
+            if is_invalid(str(num)):
+                # print(num)
+                total += num
+    print(total)
+
+
 part1()
+part2()
