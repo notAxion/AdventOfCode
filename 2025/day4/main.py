@@ -4,6 +4,10 @@ def get_adj(matrix, i, j):
     return "."
 
 
+def indexreplace(s, index, char):
+    return s[:index] + char + s[index + 1 :]
+
+
 # max_num_ats of '@' around the point
 def check_all_adj(matrix, i, j, max_num_ats):
     # print(f"ran matrix, {i}, {j}")
@@ -56,4 +60,46 @@ def part1():
     print(total_rolls)
 
 
+def part2():
+    total_rolls = 0
+
+    file = open("input", encoding="utf-8")
+    matrix = []
+    for line in file.readlines():
+        line = line.strip()
+        matrix.append(line)
+
+    # print(matrix)
+
+    while True:
+        sub_total_rolls = 0
+        removed_rolls = []
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                # print(matrix[i][j], end="")
+                place = matrix[i][j]
+                if place == "@":
+                    if check_all_adj(matrix, i, j, 4):
+                        sub_total_rolls += 1
+                        removed_rolls.append([i, j])
+            #             print("x", end="")
+            #         else:
+            #             print(matrix[i][j], end="")
+            #     else:
+            #         print(matrix[i][j], end="")
+            # print()
+        for remove in removed_rolls:
+            i = remove[0]
+            j = remove[1]
+
+            matrix[i] = indexreplace(matrix[i], j, ".")
+        if sub_total_rolls != 0:
+            total_rolls += sub_total_rolls
+        else:
+            break
+
+    print(total_rolls)
+
+
 part1()
+part2()
