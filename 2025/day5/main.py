@@ -76,4 +76,31 @@ def part1():
     print(fresh_count)
 
 
+def part2():
+    file = open("input", encoding="utf-8")
+
+    num_ranges = []
+
+    lines = file.readlines()
+    # first get the ranges
+    for line in lines:
+        line = line.strip()
+        if line == "":
+            break
+        both_nums = line.split(sep="-")
+        num_ranges.append([int(both_nums[0]), int(both_nums[1])])
+
+    num_ranges = process_ranges(num_ranges)
+    # print("after sort and merge")
+    # print(num_ranges)
+
+    total_ids = 0
+
+    for nums in num_ranges:
+        total_ids += nums[1] - nums[0] + 1
+
+    print(total_ids)
+
+
 part1()
+part2()
